@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:keva/constants/index.dart';
+import 'package:keva/helpers/sharedpref.dart';
 import 'package:keva/http_request/user.dart';
 import 'package:keva/models/usermodel.dart';
+import 'package:keva/screens/onboarding/login.dart';
 import 'package:keva/utils/index.dart';
 import 'package:provider/provider.dart';
 
@@ -119,7 +122,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 trailing: const Icon(Icons.arrow_forward_ios_outlined),
               ),
               ListTile(
-                onTap: () {},
+                onTap: () => logoutModal(),
+                //
                 title:
                     TextClass("Sign out").header3(size: 14, color: Colors.red),
                 trailing: const Icon(
@@ -135,4 +139,38 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+  void logoutModal() => showCupertinoModalPopup(
+        barrierDismissible: false,
+        context: (context),
+        builder: (context) => CupertinoAlertDialog(
+            title: const Text(
+              "Logout Action!!",
+              style: TextStyle(fontFamily: "inter", fontSize: 14),
+            ),
+            content: Column(
+              children: [
+                vertical(10),
+                const Text(
+                  "Are sure you want to logout??",
+                  style: TextStyle(fontFamily: "inter", fontSize: 12),
+                ),
+                vertical(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ButtonActionClass(() async {
+                      Navigator.pop(context);
+                      await UserAuth(name: "access_token").removedata();
+                      await UserAuth(name: "refresh_token")
+                          .removedata()
+                          .then((_) => pushPageUntil(context, const Login()));
+                    }, "Logout", lightColor, Colors.red),
+                    ButtonActionClass(() => Navigator.pop(context), "Cancel",
+                        appColor, lightColor),
+                  ],
+                )
+              ],
+            )),
+      );
 }

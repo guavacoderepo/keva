@@ -93,7 +93,7 @@ class ButtonActionClass extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: bgcolor,
-          border: Border.all(color: appColor),
+          border: Border.all(color: lightOrange),
           borderRadius: BorderRadius.circular(6),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 14),
