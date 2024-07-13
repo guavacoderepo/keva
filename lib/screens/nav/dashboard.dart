@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:keva/helpers/index.dart';
 import 'package:keva/http_request/products.dart';
+import 'package:keva/http_request/user.dart';
 import 'package:keva/models/categories.dart';
 import 'package:keva/models/products.dart';
+import 'package:keva/models/usermodel.dart';
 import 'package:keva/screens/products/product.dart';
 import 'package:keva/utils/index.dart';
 import 'package:keva/constants/index.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Dashbord extends StatefulWidget {
@@ -50,8 +53,10 @@ class _DashbordState extends State<Dashbord> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    UserModel user = Provider.of<Users>(context).user;
+
     return Scaffold(
-      appBar: AppBarClass(context).dashboard(),
+      appBar: AppBarClass(context, apptitle: user.name!).dashboard(),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(

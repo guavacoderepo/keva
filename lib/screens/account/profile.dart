@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:keva/constants/index.dart';
+import 'package:keva/http_request/user.dart';
+import 'package:keva/models/usermodel.dart';
 import 'package:keva/utils/index.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -12,8 +15,9 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    UserModel user = Provider.of<Users>(context).user;
     return Scaffold(
-      appBar: AppBarClass(context).dashboard(),
+      appBar: AppBarClass(context, apptitle: user.name!).dashboard(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: padding21),
@@ -32,9 +36,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       CircleAvatar(
                         backgroundColor: lightGrey.withOpacity(0.1),
                         radius: 60,
-                        backgroundImage: const NetworkImage(
-                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzmlfDMANvrYSMZw1Zj3oFQLjqrO-T2dK6nw&usqp=CAU",
+                        backgroundImage: NetworkImage(
+                          user.avatar ?? "",
                         ),
+                        onBackgroundImageError: (_, __) {
+                          // handle the error to display a placeholder
+                        },
+                        child: user.avatar == null || user.avatar!.isEmpty
+                            ? Image.asset(
+                                'assets/placeholder.png',
+                                fit: BoxFit.cover,
+                              )
+                            : null,
                       ),
 
 //  add camera icon for changing image
@@ -60,8 +73,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextClass("Grace Jane").header1(14),
-                      TextClass("grace1122@gmail.com").header3(size: 13),
+                      TextClass(user.name!).header1(14),
+                      TextClass(user.email!).header3(size: 13),
                       TextButton(
                         style: TextButton.styleFrom(backgroundColor: appColor),
                         onPressed: () {},
@@ -106,6 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 trailing: const Icon(Icons.arrow_forward_ios_outlined),
               ),
               ListTile(
+                onTap: () {},
                 title:
                     TextClass("Sign out").header3(size: 14, color: Colors.red),
                 trailing: const Icon(

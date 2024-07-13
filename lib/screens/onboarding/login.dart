@@ -187,12 +187,9 @@ class _LoginState extends State<Login> {
 
       //
 
-      //
-
       Provider.of<Users>(context, listen: false).setUser(res["payload"]);
-
-      
-
+      Navigator.pop(context);
+      pushPageUntil(context, const LandingPage());
     });
   }
 }

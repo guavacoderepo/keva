@@ -17,7 +17,7 @@ class AppBarClass {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextClass('Hi, {Evan}').header5(),
+              TextClass('Hi, $apptitle').header5(),
               TextClass('Welcome Back').header5(size: 17),
             ],
           ),
@@ -51,7 +51,7 @@ class AppBarClass {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: GestureDetector(
             onTap: () => Navigator.pop(context),
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_ios,
               color: lightColor,
             ),
@@ -76,10 +76,11 @@ class AppBarClass {
         leading: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: CircleAvatar(
-                  // backgroundColor: color2, child: SvgPicture.asset(back)),
-                  )),
+            onTap: () => Navigator.pop(context),
+            child: const CircleAvatar(
+                // backgroundColor: color2, child: SvgPicture.asset(back)),
+                ),
+          ),
         ),
         elevation: 0,
       );
