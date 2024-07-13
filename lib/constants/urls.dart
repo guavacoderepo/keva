@@ -8,4 +8,4 @@ const userEP = "/users";
 
 const loginEP = "/auth/login";
 
-const whoami = "auth/profile";
+const whoami = "/auth/profile";

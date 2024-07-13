@@ -9,7 +9,8 @@ Future user(context) async {
   var client = http.Client();
 
   // get user token
-  String token = await UserAuth(name: "Token").retrivedata();
+  // String refreshToken = await UserAuth(name: "refresh_token").retrivedata();
+  String accessToken = await UserAuth(name: "access_token").retrivedata();
 
   var apiuri = Uri.parse(baseurl + whoami);
 
@@ -17,18 +18,16 @@ Future user(context) async {
     var res = await client.get(apiuri, headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
+      'Authorization': 'Bearer $accessToken',
     });
 
     var json = jsonDecode(res.body);
 
-    // print(json);
-
-    if (json["status"] != "OK") {
-      return {"msg": json["msg"], "status": false};
+    if (json["statusCode"] == 401) {
+      return {"msg": json["message"], "status": false};
     }
 
-    UsersModel user = UsersModel.fromMap(json["payload"]);
+    UserModel user = UserModel.fromMap(json);
 
     return {"msg": json["msg"], "payload": user, "status": true};
   } finally {
@@ -37,12 +36,12 @@ Future user(context) async {
 }
 
 class Users extends ChangeNotifier {
-  UsersModel _user = UsersModel();
+  UserModel _user = UserModel();
 
-  UsersModel get user => _user;
+  UserModel get user => _user;
 
   // call user function
-  void setUser(UsersModel user) {
+  void setUser(UserModel user) {
     _user = user;
     notifyListeners();
   }

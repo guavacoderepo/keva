@@ -2,10 +2,12 @@ import 'package:keva/helpers/index.dart';
 import 'package:keva/constants/index.dart';
 import 'package:keva/helpers/sharedpref.dart';
 import 'package:keva/http_request/auth.dart';
+import 'package:keva/http_request/user.dart';
 import 'package:keva/screens/nav/landingscreen.dart';
 import 'package:keva/screens/onboarding/registeration.dart';
 import 'package:keva/utils/index.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -143,10 +145,9 @@ class _LoginState extends State<Login> {
                         .savedate(rx["access_token"]);
                     await UserAuth(name: "refresh_token")
                         .savedate(rx["refresh_token"])
-                        .then((value) {
-                      Navigator.pop(context);
-                      pushPageUntil(context, const LandingPage());
-                    });
+                        .then((value) => getUser());
+
+                    // Provider.of<Users>(context, listen: false).setUser(user);
                   });
 
                   // pushPageUntil(context, const LandingPage());
@@ -175,5 +176,23 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  getUser() async {
+    await user(context).then((res) async {
+      if (!res["status"]) {
+        Navigator.pop(context);
+        return toast(res["msg"].toString());
+      }
+
+      //
+
+      //
+
+      Provider.of<Users>(context, listen: false).setUser(res["payload"]);
+
+      
+
+    });
   }
 }

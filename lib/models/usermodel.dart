@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class Welcome {
+class UserModel {
   int? id;
   String? email;
   String? password;
@@ -8,7 +8,7 @@ class Welcome {
   String? role;
   String? avatar;
 
-  Welcome({
+  UserModel({
     this.id,
     this.email,
     this.password,
@@ -17,11 +17,11 @@ class Welcome {
     this.avatar,
   });
 
-  factory Welcome.fromJson(String str) => Welcome.fromMap(json.decode(str));
+  factory UserModel.fromJson(String str) => UserModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Welcome.fromMap(Map<String, dynamic> json) => Welcome(
+  factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
         id: json["id"],
         email: json["email"],
         password: json["password"],
