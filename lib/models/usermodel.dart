@@ -1,41 +1,41 @@
 import 'dart:convert';
 
-class UserModel {
+class Welcome {
+  int? id;
   String? email;
   String? password;
   String? name;
-  String? avatar;
   String? role;
-  int? id;
+  String? avatar;
 
-  UserModel({
+  Welcome({
+    this.id,
     this.email,
     this.password,
     this.name,
-    this.avatar,
     this.role,
-    this.id,
+    this.avatar,
   });
 
-  factory UserModel.fromJson(String str) => UserModel.fromMap(json.decode(str));
+  factory Welcome.fromJson(String str) => Welcome.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
+  factory Welcome.fromMap(Map<String, dynamic> json) => Welcome(
+        id: json["id"],
         email: json["email"],
         password: json["password"],
         name: json["name"],
-        avatar: json["avatar"],
         role: json["role"],
-        id: json["id"],
+        avatar: json["avatar"],
       );
 
   Map<String, dynamic> toMap() => {
+        "id": id,
         "email": email,
         "password": password,
         "name": name,
-        "avatar": avatar,
         "role": role,
-        "id": id,
+        "avatar": avatar,
       };
 }

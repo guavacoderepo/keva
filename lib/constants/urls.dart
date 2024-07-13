@@ -7,3 +7,5 @@ const productsEP = "/products";
 const userEP = "/users";
 
 const loginEP = "/auth/login";
+
+const whoami = "auth/profile";
